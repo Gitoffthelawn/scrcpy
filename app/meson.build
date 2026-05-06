@@ -32,6 +32,7 @@ src = [
     'src/recorder.c',
     'src/scrcpy.c',
     'src/screen.c',
+    'src/sdl_hints.c',
     'src/server.c',
     'src/texture.c',
     'src/version.c',

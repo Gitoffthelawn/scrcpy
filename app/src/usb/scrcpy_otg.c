@@ -10,6 +10,7 @@
 #endif
 #include "events.h"
 #include "screen.h"
+#include "sdl_hints.h"
 #include "usb/aoa_hid.h"
 #include "usb/gamepad_aoa.h"
 #include "usb/keyboard_aoa.h"
@@ -64,9 +65,7 @@ scrcpy_otg(struct scrcpy_options *options) {
 
     const char *serial = options->serial;
 
-    if (!SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1")) {
-        LOGW("Could not allow joystick background events");
-    }
+    sc_sdl_set_hints(options->render_driver, options->disable_screensaver);
 
     // Minimal SDL initialization
     if (!SDL_Init(SDL_INIT_EVENTS)) {
@@ -82,10 +81,6 @@ scrcpy_otg(struct scrcpy_options *options) {
     }
 
     atexit(SDL_Quit);
-
-    if (!SDL_SetHint(SDL_HINT_MOUSE_FOCUS_CLICKTHROUGH, "1")) {
-        LOGW("Could not enable mouse focus clickthrough");
-    }
 
     enum scrcpy_exit_code ret = SCRCPY_EXIT_FAILURE;
 
